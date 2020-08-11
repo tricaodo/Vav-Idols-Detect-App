@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Link, Switch, Route } from "react-router-dom";
 import './App.css';
-import _ from "lodash"
 import Home from './Home';
 import DetectIdol from './DetectIdol';
 class App extends React.Component {

@@ -14,6 +14,7 @@ class DetectIdol extends React.Component {
     }
     state = {
         term: "",
+        idolName: "",
         isValid: false
     }
 
@@ -31,18 +32,23 @@ class DetectIdol extends React.Component {
             "maxNumOfCandidatesReturned": 1,
         });
         const targetInfo = identifyResponse.data[0].candidates[0];
-        const foundIdolInfo = finalData.filter(individual => individual.personId === targetInfo.personId);
-        console.log(this.ctx.canvas.width);
-        if (foundIdolInfo.length > 0) {
-            this.setState({ isValid: true })
+        if (targetInfo) {
+            const foundIdolInfo = finalData.filter(individual => individual.personId === targetInfo.personId);
+            this.setState({ idolName: foundIdolInfo[0].name })
             this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
             this.ctx.beginPath(); // begin
             this.ctx.drawImage(this.imageRef.current, 0, 0);
             this.ctx.rect(shape.left, shape.top, shape.width, shape.height);
             this.ctx.closePath(); // begin
+            this.ctx.strokeStyle = "#FF0000";
             this.ctx.stroke();
+        }else{
+            this.setState({ idolName: "Cannot identify." })
         }
-        console.log(foundIdolInfo[0].name);
+        // if (foundIdolInfo.length > 0) {
+
+        // }
+        // console.log(foundIdolInfo[0].name);
     }
 
     handleChange = (e) => {
@@ -51,7 +57,7 @@ class DetectIdol extends React.Component {
     }
 
     render() {
-        const { term, isValid } = this.setState;
+        const { term } = this.setState;
         return (
             <section className="section mt-6" >
                 <div className="container mt-5">
@@ -76,21 +82,25 @@ class DetectIdol extends React.Component {
 
                     </div>
                     <div className="columns">
+                        {/* <div className="column"> */}
+
+
+                        <figure className="image is-square" style={{ display: "none" }} >
+                            <img ref={this.imageRef} src={this.state.term} alt="idol" />
+                        </figure>
+
+
+                        {/* </div> */}
+
                         <div className="column">
+                            <canvas ref={this.canvasRef} width="600px" height="400px">
 
-
-                            <figure className="image is-square" style={{display: "none"}} >
-                                <img ref={this.imageRef} src={this.state.term} />
-                            </figure>
-
+                            </canvas>
 
                         </div>
 
                         <div className="column">
-                            <canvas ref={this.canvasRef} width="400" height="400">
-
-                            </canvas>
-
+                            <h1 >{this.state.idolName}</h1>
                         </div>
                     </div>
                 </div>

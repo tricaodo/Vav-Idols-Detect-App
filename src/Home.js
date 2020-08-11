@@ -1,15 +1,12 @@
 import React from "react";
 import idols from "./jsonFiles/filter.js";
 import azureApi from "./apis/azureApi";
-import { traverseIdols, downloadJson } from "./fetchIdols.js";
 
 class Home extends React.Component {
     state = {
         idolsInfo: []
     };
     async componentDidMount() {
-        // let data = await traverseIdols();
-        // this.setState({idolsInfo: data});
         this.setState({ idolsInfo: idols })
     }
 
@@ -100,7 +97,7 @@ class Home extends React.Component {
                         href={`data: text/json;charset=utf-8, ${encodeURIComponent(JSON.stringify(this.state.idolsInfo))}`}
                         className="button is-small is-success is-outlined"
                         download="data.json">Download</a>
-                    {this.renderIdolsInfo()};
+                    {this.renderIdolsInfo()}
                 </div>
             </section>
         );
