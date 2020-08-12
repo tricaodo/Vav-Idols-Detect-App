@@ -8,6 +8,9 @@
 # testing
 /coverage
 
+# apis
+/src/apis
+
 # production
 /build
 
